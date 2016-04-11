@@ -4,7 +4,7 @@
 // GNU GPL ABOVE ALL
 // ************************
 function upname($var)
-{ //comprends tout ce qui faut pour le name des coureurs : enleve les accents et les met en majuscules
+{ //take a name and put it in uppercase
     $var = str_replace(
         array(
             'à', 'â', 'ä', 'á', 'ã', 'å',
@@ -39,18 +39,18 @@ function upname($var)
 }
 
 function uppername($prename)
-{ //met en forme les prenames
+{ //for surnames
     if (isset($prename) && !empty($prename)) {
         $prename = upname($prename);
         $prename = utf8_decode($prename);
         //$prename=addslashes($prename);
         $prename = strtolower($prename);
         $total = strlen($prename);
-        $prename[0] = utf8_decode(upname(utf8_encode($prename[0]))); //on met en majuscule le premier caractère
-        for ($i = 1; $i < $total - 1; $i++) { //pour tous les caractères de la chaine (sauf la dernière $total-1, et la première qui est déjà fait)
-            if (($prename[$i] == " ") || ($prename[$i] == "'") || ($prename[$i] == "-")) { //si le caractère est " " ou "-"
-                $prename[$i + 1] = utf8_decode(upname(utf8_encode($prename[$i + 1]))); //on met en caps le caractère qui suit
-                $i++; //on saute le caractère qu'on vient de mettre en caps
+        $prename[0] = utf8_decode(upname(utf8_encode($prename[0]))); //first char in uppercase
+        for ($i = 1; $i < $total - 1; $i++) { //for every char of the string (apart from $total-1, and the already done first one)
+            if (($prename[$i] == " ") || ($prename[$i] == "'") || ($prename[$i] == "-")) { //if char is  " " or "-"
+                $prename[$i + 1] = utf8_decode(upname(utf8_encode($prename[$i + 1]))); //uppercasing the next one
+                $i++; //we move
             }
 
             $prename = utf8_encode($prename);
@@ -83,7 +83,7 @@ function uppername($prename)
 }
 
 function checkstr($var)
-{ //Verification du name/prename
+{ //Is it a name or a surname?
     // $var=utf8_decode($var);
     $reg = "#^([a-z]+(( )[a-z]+)*)+([-]([a-z]+(( )[a-z]+)*)+)*$#iu";
     if (preg_match($reg, $var)) {

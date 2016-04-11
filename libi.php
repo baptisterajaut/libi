@@ -1,9 +1,9 @@
-<!--  Libi project  1.0.2 - Licensed under GNU GPL -->
+<!--  Libi project  - Licensed under GNU GPL -->
 
 <?php
 
 
-//rearrange un tableau de session qui peut avoir des trous. Renvoie la nouvelle longueur
+//take a session array and removes its empty cases
 function resetter($name)
 {
     echo '<!-- Resetter-->';
@@ -20,14 +20,15 @@ function resetter($name)
 
 }
 
+// THE libi function
+//crate a form inside a table - amm you have to do is enter paramaterd
 function autoinput($type, $name, $echo, $args)
 {
     echo '<!-- autoinput-->';
-    //type :type d'input
-    //name  :le name recupere par le traitement
-    //echo :le texte affiché devant
-    //args : des parametres html en plus (required...)
-    //necessite d'etre dans un tableau
+    //type : input type
+    //name  : name of the form
+    //echo : What's said
+    //args : some paramaters (value, min, max...)
     echo '<tr><td><label for="' . $name . '">' . $echo . '</label></td>';
     echo "<td><input type=\"$type\" name=\"$name\" id=\"$name\" $args /></td></tr>";
 
@@ -38,8 +39,8 @@ function autoinput($type, $name, $echo, $args)
 
 
 
-function affiche($var)
-{ //fonction parlante, pour le debug
+function show($var)
+{ //verbose power
     echo '-- ' . $var . ' -- <br/>';
 }
 

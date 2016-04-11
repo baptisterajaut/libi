@@ -16,7 +16,10 @@ function secure_var($var)
 function posta($name)
 {
     echo '<!-- fposta-->';
-    //renvoie ce qui est dans post, et le passe en session. Sinon renvoie ce qui est dans session. Sinon, renvoie null.
+    // sends something which in in post and send it in session
+    // if post is empty, send which is in session
+    // if session is empty, returns null
+    //for forms
     if (isset($_POST[$name]) && !empty($_POST[$name])) {
         $return = addslashes($_POST[$name]);
         $return = htmlentities($return, ENT_COMPAT, "UTF-8");
@@ -34,7 +37,7 @@ function posta($name)
 
 function filter_int($var)
 {
-    //ne garde que les entiers d'une variable
+    //keeps only ints
     $var = secure_var($var);
     return filter_var($var, FILTER_SANITIZE_NUMBER_INT);
 
@@ -42,8 +45,9 @@ function filter_int($var)
 
 
 function post($name)
-{ //recupere une variable post et la securise.
-    echo '<!-- fpost-->';
+{ //fetch post variable and secures it
+    //it gives back null, so you dont have to check if empty or not
+    echo '<!-- post-->';
     if (isset($_POST[$name]) && !empty($_POST[$name])) {
         $return = addslashes($_POST[$name]);
         $return = htmlentities($return, ENT_COMPAT, "UTF-8");
@@ -54,7 +58,8 @@ function post($name)
 }
 
 function get($name)
-{ //recupere une variable get et la securise.
+{ //fetch get var and secures it
+    //it gives back null, so you dont have to check if empty or not
     echo '<!-- get-->';
     if (isset($_GET[$name]) && !empty($_GET[$name])) {
         $return = addslashes($_GET[$name]);
@@ -66,8 +71,10 @@ function get($name)
 }
 
 function posts($name)
-{ //recupere une variable post, ne la securise pas.
-    echo '<!-- fpost-->';
+{ //fetch post var.
+    //it gives back null, so you dont have to check if empty or not
+
+    echo '<!-- posts-->';
     if (isset($_POST[$name]))
         return $_POST[$name];
     else
@@ -75,7 +82,9 @@ function posts($name)
 }
 
 function gets($name)
-{ //recupere une variable get, ne la securise pas.
+{ //fetch get var.
+    //it gives back null, so you dont have to check if empty or not
+
     echo '<!-- gests-->';
     if (isset($_GET[$name]))
         return $_GET[$name];
