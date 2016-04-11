@@ -4,19 +4,19 @@
 
 
 //take a session array and removes its empty cases
-function resetter($name)
+function resetter(&$name)
 {
     echo '<!-- Resetter-->';
     $i = 0;
     $temp = array();
-    foreach ($_SESSION[$name] as $ligne) {
+    foreach ($name as $ligne) {
         $temp[$i] = $ligne;
         $i++;
     }
 
-    $_SESSION[$name] = $temp;
+    $name = $temp;
     return $i;
-    
+
 
 }
 
@@ -36,14 +36,10 @@ function autoinput($type, $name, $echo, $args)
 }
 
 
-
-
-
 function show($var)
 { //verbose power
     echo '-- ' . $var . ' -- <br/>';
 }
-
 
 
 //---------------
@@ -52,7 +48,7 @@ function show($var)
 $pdo_ok = false;
 $user_func = false;
 $var_securities = false;
-$name_tools=false;
+$name_tools = false;
 if (!isset($libi_config_on)) {
     if (@include('libi_files/libi_config.php')) {
         if ($libi_pdo['enabled'])
@@ -72,32 +68,31 @@ if (!isset($libi_config_on)) {
                 autodie('names_tools');
             else $name_tools = true;
     } else
-        echo '<pre>Warning! Unable to get libi config. Expect errors.</pre>';
+        echo '<--! Warning! Unable to get libi config. Running core only.--';
 }
 
 
-function autodie($module)
+ function autodie($module)
 {
     die('<pre>Unable to get libi ' . $module . ' module!</pre>');
 }
 
-function isenabled($bool)
+ function isenabled($bool)
 {
     if ($bool)
-        return 'Enabled';
+        return '<div style="color:green; font-weight: bold">Enabled</div>';
     else
-        return 'Not enabled';
+        return '<div style="color:red; font-weight: bold">Not enabled</div>';
 }
 
 
 if (__FILE__ == $_SERVER['SCRIPT_FILENAME']) {
     // this file is not being included
     if ($libi_welcome) {
-        echo '<div style="text-align: center;"><h1>WoopyCat libi micro-framework</h1>
+        echo '<div style="text-align: center;"><h1>Libi micro-framework CORE</h1>
 		<table border="1" style="text-align:center;margin-left:auto; 
     margin-right:auto;">
-		<tr><th>Module</th><th>Is enabled?</th></tr>
-		<tr><td>Core</td><td>Enabled</td></tr>
+		<tr><th>Module</th><th>Module status</th></tr>
 		<tr><td>Pdo</td><td>' . isenabled($pdo_ok) . '</td></tr>
 		<tr><td>User functions</td><td>' . isenabled($user_func) . '</td></tr>
 		<tr><td>Variables securers</td><td>' . isenabled($var_securities) . '</td></tr>
@@ -105,9 +100,9 @@ if (__FILE__ == $_SERVER['SCRIPT_FILENAME']) {
 		</table>
 		</div>
 		<div style="text-align:center;position:fixed; width:100%; height:70px; padding:5px; bottom:0px; ">
-		ALL HAIL GNU GPL - Baptiste rajaut</div>';
+		ALL HAIL GNU GPL - Baptiste rajaut - v0.1.0</div>';
     } else {
-        header('Location: http://'.$_SERVER['HTTP_HOST'].'/');
+        header('Location: http://' . $_SERVER['HTTP_HOST'] . '/');
         exit();
     }
 }

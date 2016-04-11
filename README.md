@@ -7,6 +7,6 @@ Feed free to download, but please credit me...
 
 Donwload libi.php and libi_files
 
-Configure from libi_config what do you and and dont ant and pdo
+Configure from libi_config what do you wand and dont want and pdo
 
 Done

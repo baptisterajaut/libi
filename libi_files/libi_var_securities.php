@@ -21,8 +21,7 @@ function posta($name)
     // if session is empty, returns null
     //for forms
     if (isset($_POST[$name]) && !empty($_POST[$name])) {
-        $return = addslashes($_POST[$name]);
-        $return = htmlentities($return, ENT_COMPAT, "UTF-8");
+        $return = secure_var($_POST[$name]);
         $_SESSION[$name] = $return;
         return $return;
     } else {
@@ -49,8 +48,7 @@ function post($name)
     //it gives back null, so you dont have to check if empty or not
     echo '<!-- post-->';
     if (isset($_POST[$name]) && !empty($_POST[$name])) {
-        $return = addslashes($_POST[$name]);
-        $return = htmlentities($return, ENT_COMPAT, "UTF-8");
+        $return = secure_var($_POST[$name]);
         return $return;
     } else
         return null;
@@ -62,8 +60,7 @@ function get($name)
     //it gives back null, so you dont have to check if empty or not
     echo '<!-- get-->';
     if (isset($_GET[$name]) && !empty($_GET[$name])) {
-        $return = addslashes($_GET[$name]);
-        $return = htmlentities($return, ENT_COMPAT, "UTF-8");
+        $return = secure_var($_GET[$name]);
         return $return;
     } else
         return null;
