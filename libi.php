@@ -45,44 +45,43 @@ function show($var)
 //---------------
 //libi_core start
 //---------------
-$pdo_ok = false;
-$user_func = false;
-$var_securities = false;
-$name_tools = false;
+$pdo_module = 0;
+$user_func = 0;
+$var_securities = 0;
+$name_tools = 0;
 if (!isset($libi_config_on)) {
     if (@include('libi_files/libi_config.php')) {
         if ($libi_pdo['enabled'])
             if (@!include('libi_files/libi_pdo.php'))
-                autodie('pdo');
-            else $pdo_ok = true;
+                $pdo_module=2;
+            else $pdo_module = 1;
         if ($libi_enable_user_func)
             if (@!include('libi_files/libi_user_func.php'))
-                autodie('user_func');
-            else $user_func = true;
+                $user_func=2;
+            else $user_func = 1;
         if ($libi_enable_var_securities)
             if (@!include('libi_files/libi_var_securities.php'))
-                autodie('var_securities');
-            else $var_securities = true;
+                $var_securities=2;
+            else $var_securities = 1;
         if ($libi_enable_names_tools)
             if (@!include('libi_files/libi_names_tools.php'))
-                autodie('names_tools');
-            else $name_tools = true;
+                $name_tools=2;
+            else $name_tools = 1;
     } else
-        echo '<--! Warning! Unable to get libi config. Running core only.--';
+        echo '<--! Warning! Unable to get libi config. Running core only.-->';
 }
 
 
- function autodie($module)
-{
-    die('<pre>Unable to get libi ' . $module . ' module!</pre>');
-}
 
- function isenabled($bool)
+ function isenabled($valeur)
 {
-    if ($bool)
-        return '<div style="color:green; font-weight: bold">Enabled</div>';
-    else
-        return '<div style="color:red; font-weight: bold">Not enabled</div>';
+    switch ($valeur){
+        case 2 : return '<div style="color:darkred; font-size:200%;font-weight: bold">ERROR</div>';
+
+        case 1 : return '<div style="color:green; font-weight: bold">Enabled</div>';
+
+        case 0 : return '<div style="color:darkgray; font-weight: bold">Not enabled</div>';
+}
 }
 
 
@@ -93,14 +92,14 @@ if (__FILE__ == $_SERVER['SCRIPT_FILENAME']) {
 		<table border="1" style="text-align:center;margin-left:auto; 
     margin-right:auto;">
 		<tr><th>Module</th><th>Module status</th></tr>
-		<tr><td>Pdo</td><td>' . isenabled($pdo_ok) . '</td></tr>
+		<tr><td>Pdo</td><td>' . isenabled($pdo_module) . '</td></tr>
 		<tr><td>User functions</td><td>' . isenabled($user_func) . '</td></tr>
 		<tr><td>Variables securers</td><td>' . isenabled($var_securities) . '</td></tr>
 		<tr><td>Tools for names</td><td>' . isenabled($name_tools) . '</td></tr>
 		</table>
 		</div>
 		<div style="text-align:center;position:fixed; width:100%; height:70px; padding:5px; bottom:0px; ">
-		ALL HAIL GNU GPL - Baptiste rajaut - v0.1.0</div>';
+		ALL HAIL GNU GPL - Libi project - v0.1.0 - Baptiste Rajaut</div>';
     } else {
         header('Location: http://' . $_SERVER['HTTP_HOST'] . '/');
         exit();
