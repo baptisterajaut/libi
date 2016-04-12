@@ -6,7 +6,7 @@
 
 function secure_var($var)
 {
-    //securise une variable
+    //secures a string
     $return = addslashes($var);
     $return = htmlentities($return, ENT_COMPAT, "UTF-8");
     return $return;
@@ -15,7 +15,7 @@ function secure_var($var)
 
 function posta($name)
 {
-    echo '<!-- fposta-->';
+    echo '<!-- posta-->';
     // sends something which in in post and send it in session
     // if post is empty, send which is in session
     // if session is empty, returns null
@@ -48,8 +48,7 @@ function post($name)
     //it gives back null, so you dont have to check if empty or not
     echo '<!-- post-->';
     if (isset($_POST[$name]) && !empty($_POST[$name])) {
-        $return = secure_var($_POST[$name]);
-        return $return;
+        return secure_var($_POST[$name]);
     } else
         return null;
 
@@ -60,8 +59,8 @@ function get($name)
     //it gives back null, so you dont have to check if empty or not
     echo '<!-- get-->';
     if (isset($_GET[$name]) && !empty($_GET[$name])) {
-        $return = secure_var($_GET[$name]);
-        return $return;
+        return secure_var($_GET[$name]);
+
     } else
         return null;
 
@@ -72,7 +71,7 @@ function posts($name)
     //it gives back null, so you dont have to check if empty or not
 
     echo '<!-- posts-->';
-    if (isset($_POST[$name]))
+    if (isset($_POST[$name]) && !empty($_POST[$name]))
         return $_POST[$name];
     else
         return null;
@@ -83,7 +82,7 @@ function gets($name)
     //it gives back null, so you dont have to check if empty or not
 
     echo '<!-- gests-->';
-    if (isset($_GET[$name]))
+    if (isset($_GET[$name]) && !empty($_GET[$name]))
         return $_GET[$name];
     else
         return null;

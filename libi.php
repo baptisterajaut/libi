@@ -99,7 +99,7 @@ if (__FILE__ == $_SERVER['SCRIPT_FILENAME']) {
 		</table>
 		</div>
 		<div style="text-align:center;position:fixed; width:100%; height:70px; padding:5px; bottom:0px; ">
-		ALL HAIL GNU GPL - Libi project - v0.1.0 - Baptiste Rajaut</div>';
+		ALL HAIL GNU GPL - Libi project - v0.1.1 - Baptiste Rajaut</div>';
     } else {
         header('Location: http://' . $_SERVER['HTTP_HOST'] . '/');
         exit();
