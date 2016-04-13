@@ -10,6 +10,7 @@ $libi_enable_names_tools=false; //tools for names
 
 $libi_pdo = array( //params for pdo
 	'enabled' => 1, //enable module
+	'auto_pdo'=> false, //enable auto_pdo
 	'user'=>'root',
 	'password'=>'poi',
 	'strConnection' => 'mysql:host=localhost;dbname=materiel',

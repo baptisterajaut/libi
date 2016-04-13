@@ -80,7 +80,7 @@ if (!isset($libi_config_on)) {
 
         case 1 : return '<div style="color:green; font-weight: bold">Enabled</div>';
 
-        case 0 : return '<div style="color:darkgray; font-weight: bold">Not enabled</div>';
+        case 0 : return '<div style="color:darkgray;">Not enabled</div>';
 }
 }
 

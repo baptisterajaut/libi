@@ -17,7 +17,9 @@ function pdoco($libi_pdo)
     }
     return $pdo;
 }
-
+if($libi_pdo['auto_pdo']){
+    $pdo=pdoco($libi_pdo);
+}
 
 error_reporting(E_ERROR);
 if (!$libi_config_on) {
