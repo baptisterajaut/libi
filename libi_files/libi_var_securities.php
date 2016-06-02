@@ -15,7 +15,6 @@ function secure_var($var)
 
 function posta($name)
 {
-    echo '<!-- posta-->';
     // sends something which in in post and send it in session
     // if post is empty, send which is in session
     // if session is empty, returns null
@@ -46,7 +45,6 @@ function filter_int($var)
 function post($name)
 { //fetch post variable and secures it
     //it gives back null, so you dont have to check if empty or not
-    echo '<!-- post-->';
     if (isset($_POST[$name]) && !empty($_POST[$name])) {
         return secure_var($_POST[$name]);
     } else
@@ -57,7 +55,6 @@ function post($name)
 function get($name)
 { //fetch get var and secures it
     //it gives back null, so you dont have to check if empty or not
-    echo '<!-- get-->';
     if (isset($_GET[$name]) && !empty($_GET[$name])) {
         return secure_var($_GET[$name]);
 
@@ -70,7 +67,6 @@ function posts($name)
 { //fetch post var.
     //it gives back null, so you dont have to check if empty or not
 
-    echo '<!-- posts-->';
     if (isset($_POST[$name]) && !empty($_POST[$name]))
         return $_POST[$name];
     else
@@ -81,7 +77,6 @@ function gets($name)
 { //fetch get var.
     //it gives back null, so you dont have to check if empty or not
 
-    echo '<!-- gests-->';
     if (isset($_GET[$name]) && !empty($_GET[$name]))
         return $_GET[$name];
     else

@@ -1,7 +1,8 @@
 <!--  Libi project  - Licensed under GNU GPL -->
 
 <?php
-
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
 //take a session array and removes its empty cases
 function resetter(&$name)
@@ -22,7 +23,7 @@ function resetter(&$name)
 
 // THE libi function
 //crate a form inside a table - amm you have to do is enter paramaterd
-function autoinput($type, $name, $echo, $args)
+function autoinput($name, $echo,$type='',  $args='')
 {
     echo '<!-- autoinput-->';
     //type : input type
@@ -99,7 +100,7 @@ if (__FILE__ == $_SERVER['SCRIPT_FILENAME']) {
 		</table>
 		</div>
 		<div style="text-align:center;position:fixed; width:100%; height:70px; padding:5px; bottom:0px; ">
-		ALL HAIL GNU GPL - Libi project - v0.1.1 - Baptiste Rajaut</div>';
+		ALL HAIL GNU GPL - Libi project - v0.1.2 - Baptiste Rajaut</div>';
     } else {
         header('Location: http://' . $_SERVER['HTTP_HOST'] . '/');
         exit();

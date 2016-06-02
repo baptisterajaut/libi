@@ -1,12 +1,13 @@
 <?php
 // ************************
-// LIBI PDO TOOLKITS
+// LIBI PDO TOOLKIT
 // GNU GPL ABOVE ALL
 // ************************
 function pdoco($libi_pdo)
 { //gives back a pdo object
     if ($libi_pdo == null)
-        die('Libi_pdo : No libi_pdo array parameter Given!');
+        throw new Exception('Libi_pdo : No libi_pdo array parameter Given!');
+    $pdo='';
     try {
 
         $pdo = new PDO($libi_pdo['strConnection'], $libi_pdo['user'], $libi_pdo['password'] /*, $libi_pdo['arrExtraParam']*/); // Instancie la connexion
@@ -17,21 +18,20 @@ function pdoco($libi_pdo)
     }
     return $pdo;
 }
-if($libi_pdo['auto_pdo']){
-    $pdo=pdoco($libi_pdo);
-}
+
 
 error_reporting(E_ERROR);
 if (!$libi_config_on) {
 
-    echo '<!-- Warning, libi pdo loaded direcly -->';
+    echo '<!-- Warning, libi pdo loaded directly -->';
 
 
     if (!(include 'libi_config.php')) {
-        die('Pdo module loaded without working config. Aborting.');
+        throw new Exception('Pdo module loaded without working config. Aborting.');
     }
 
 
 }
-
-?>
+if($libi_pdo['auto_pdo']){
+    $pdo=pdoco($libi_pdo);
+}
