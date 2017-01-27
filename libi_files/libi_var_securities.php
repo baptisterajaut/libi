@@ -4,22 +4,13 @@
 // GNU GPL ABOVE ALL
 // ************************
 
-function secure_var($var)
-{
-    //secures a string
-    $return = addslashes($var);
-    $return = htmlentities($return, ENT_COMPAT, "UTF-8");
-    return $return;
-
-}
-
 function posta($name)
 {
     // sends something which in in post and send it in session
     // if post is empty, send which is in session
     // if session is empty, returns false
     //for forms
-    if (isset($_POST[$name]) && !empty($_POST[$name])) {
+    if (array_key_exists($name,$_POST) && $_POST[$name] !== ""){
         $return = secure_var($_POST[$name]);
         $_SESSION[$name] = $return;
         return $return;
@@ -29,8 +20,60 @@ function posta($name)
         }
     }
 
-    return false;
+    return null;
 
+}
+
+
+
+
+function post($name)
+{ //fetch post variable and secures it
+    //it gives back false, so you dont have to check if empty or not.
+    if (array_key_exists($name,$_POST) && $_POST[$name] !== ""){
+        return secure_var($_POST[$name]);
+    } else
+        return null;
+
+}
+
+
+function posts($name)
+{ //fetch post var.
+    //it gives back false, so you dont have to check if empty or not
+
+    if (array_key_exists($name,$_POST)&& $_POST[$name] !== "")
+        return $_POST[$name];
+    else
+        return null;
+}
+
+function get($name)
+{ //fetch get var and secures it
+    //it gives back false, so you dont have to check if empty or not
+    if (array_key_exists($name,$_GET) && $_GET[$name] !== "") {
+        return secure_var($_GET[$name]);
+
+    } else
+        return null;
+
+}
+
+function gets($name)
+{ //fetch get var.
+    //it gives back false, so you dont have to check if empty or not
+
+    if (array_key_exists($name,$_GET)&& $_GET[$name] !== "") 
+        return $_GET[$name];
+    else
+        return null;
+}
+
+function path_info($number,$delimiter='/'){
+	if(empty($_SERVER['PATH_INFO']))
+		return null;
+	$test=explode($delimiter,$_SERVER['PATH_INFO']);
+	return $test[$number+1];
 }
 
 function filter_int($var)
@@ -41,46 +84,13 @@ function filter_int($var)
 
 }
 
+function secure_var($var)
+{
+    //secures a string
+    $return = addslashes($var);
+    $return = htmlentities($return, ENT_COMPAT, "UTF-8");
+    return $return;
 
-function post($name)
-{ //fetch post variable and secures it
-    //it gives back false, so you dont have to check if empty or not.
-    if (isset($_POST[$name]) && !empty($_POST[$name])) {
-        return secure_var($_POST[$name]);
-    } else
-        return false;
-
-}
-
-function get($name)
-{ //fetch get var and secures it
-    //it gives back false, so you dont have to check if empty or not
-    if (isset($_GET[$name]) && !empty($_GET[$name])) {
-        return secure_var($_GET[$name]);
-
-    } else
-        return false;
-
-}
-
-function posts($name)
-{ //fetch post var.
-    //it gives back false, so you dont have to check if empty or not
-
-    if (isset($_POST[$name]) && !empty($_POST[$name]))
-        return $_POST[$name];
-    else
-        return false;
-}
-
-function gets($name)
-{ //fetch get var.
-    //it gives back false, so you dont have to check if empty or not
-
-    if (isset($_GET[$name]) && !empty($_GET[$name]))
-        return $_GET[$name];
-    else
-        return false;
 }
 
 ?>
