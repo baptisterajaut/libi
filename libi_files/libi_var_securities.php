@@ -17,7 +17,7 @@ function posta($name)
 {
     // sends something which in in post and send it in session
     // if post is empty, send which is in session
-    // if session is empty, returns null
+    // if session is empty, returns false
     //for forms
     if (isset($_POST[$name]) && !empty($_POST[$name])) {
         $return = secure_var($_POST[$name]);
@@ -29,7 +29,7 @@ function posta($name)
         }
     }
 
-    return null;
+    return false;
 
 }
 
@@ -44,43 +44,43 @@ function filter_int($var)
 
 function post($name)
 { //fetch post variable and secures it
-    //it gives back null, so you dont have to check if empty or not
+    //it gives back false, so you dont have to check if empty or not.
     if (isset($_POST[$name]) && !empty($_POST[$name])) {
         return secure_var($_POST[$name]);
     } else
-        return null;
+        return false;
 
 }
 
 function get($name)
 { //fetch get var and secures it
-    //it gives back null, so you dont have to check if empty or not
+    //it gives back false, so you dont have to check if empty or not
     if (isset($_GET[$name]) && !empty($_GET[$name])) {
         return secure_var($_GET[$name]);
 
     } else
-        return null;
+        return false;
 
 }
 
 function posts($name)
 { //fetch post var.
-    //it gives back null, so you dont have to check if empty or not
+    //it gives back false, so you dont have to check if empty or not
 
     if (isset($_POST[$name]) && !empty($_POST[$name]))
         return $_POST[$name];
     else
-        return null;
+        return false;
 }
 
 function gets($name)
 { //fetch get var.
-    //it gives back null, so you dont have to check if empty or not
+    //it gives back false, so you dont have to check if empty or not
 
     if (isset($_GET[$name]) && !empty($_GET[$name]))
         return $_GET[$name];
     else
-        return null;
+        return false;
 }
 
 ?>
