@@ -1,4 +1,4 @@
-<!--  Libi project  - Licensed under GNU GPL -->
+
 
 <?php
 error_reporting(E_ALL);
@@ -25,7 +25,6 @@ function resetter(&$name)
 //crate a form inside a table - amm you have to do is enter paramaterd
 function autoinput($name, $echo,$type='',  $args='')
 {
-    echo '<!-- autoinput-->';
     //type : input type
     //name  : name of the form
     //echo : What's said
@@ -50,6 +49,7 @@ $pdo_module = 0;
 $user_func = 0;
 $var_securities = 0;
 $name_tools = 0;
+$formBuilder=0;
 if (!isset($libi_config_on)) {
     if (@include('libi_files/libi_config.php')) {
         if ($libi_pdo['enabled'])
@@ -68,6 +68,10 @@ if (!isset($libi_config_on)) {
             if (@!include('libi_files/libi_names_tools.php'))
                 $name_tools=2;
             else $name_tools = 1;
+       if ($libi_enable_formBuilder)
+            if (@!include('libi_files/libi_FormBuilder.php'))
+                $formBuilder=2;
+            else $formBuilder = 1;
     } else
         echo '<--! Warning! Unable to get libi config. Running core only.-->';
 }
@@ -97,10 +101,11 @@ if (__FILE__ == $_SERVER['SCRIPT_FILENAME']) {
 		<tr><td>User functions</td><td>' . isenabled($user_func) . '</td></tr>
 		<tr><td>Variables securers</td><td>' . isenabled($var_securities) . '</td></tr>
 		<tr><td>Tools for names</td><td>' . isenabled($name_tools) . '</td></tr>
+		<tr><td>Form Builder</td><td>'.isenabled($formBuilder).'</td></tr>
 		</table>
 		</div>
 		<div style="text-align:center;position:fixed; width:100%; height:70px; padding:5px; bottom:0px; ">
-		ALL HAIL GNU GPL - Libi project - v0.1.2 - Baptiste Rajaut</div>';
+		ALL HAIL GNU GPL - Libi project - v0.1.3 - Baptiste Rajaut</div>';
     } else {
         header('Location: http://' . $_SERVER['HTTP_HOST'] . '/');
         exit();
@@ -108,4 +113,4 @@ if (__FILE__ == $_SERVER['SCRIPT_FILENAME']) {
 }
 
 ?>
-
+<!--  Libi project  - Licensed under GNU GPL -->

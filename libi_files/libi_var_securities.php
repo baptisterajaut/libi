@@ -4,6 +4,15 @@
 // GNU GPL ABOVE ALL
 // ************************
 
+function secure_var($var)
+{
+    //secures a string
+    $return = addslashes($var);
+    $return = htmlentities($return, ENT_COMPAT, "UTF-8");
+    return $return;
+
+}
+
 function posta($name)
 {
     // sends something which in in post and send it in session
@@ -20,11 +29,17 @@ function posta($name)
         }
     }
 
-    return null;
+    return false;
 
 }
 
+function filter_int($var)
+{
+    //keeps only ints
+    $var = secure_var($var);
+    return filter_var($var, FILTER_SANITIZE_NUMBER_INT);
 
+}
 
 
 function post($name)
@@ -33,7 +48,7 @@ function post($name)
     if (array_key_exists($name,$_POST) && $_POST[$name] !== ""){
         return secure_var($_POST[$name]);
     } else
-        return null;
+        return false;
 
 }
 
@@ -45,7 +60,7 @@ function posts($name)
     if (array_key_exists($name,$_POST)&& $_POST[$name] !== "")
         return $_POST[$name];
     else
-        return null;
+        return false;
 }
 
 function get($name)
@@ -55,7 +70,7 @@ function get($name)
         return secure_var($_GET[$name]);
 
     } else
-        return null;
+        return false;
 
 }
 
@@ -66,31 +81,14 @@ function gets($name)
     if (array_key_exists($name,$_GET)&& $_GET[$name] !== "") 
         return $_GET[$name];
     else
-        return null;
+        return false;
 }
 
 function path_info($number,$delimiter='/'){
 	if(empty($_SERVER['PATH_INFO']))
-		return null;
+		return false;
 	$test=explode($delimiter,$_SERVER['PATH_INFO']);
 	return $test[$number+1];
-}
-
-function filter_int($var)
-{
-    //keeps only ints
-    $var = secure_var($var);
-    return filter_var($var, FILTER_SANITIZE_NUMBER_INT);
-
-}
-
-function secure_var($var)
-{
-    //secures a string
-    $return = addslashes($var);
-    $return = htmlentities($return, ENT_COMPAT, "UTF-8");
-    return $return;
-
 }
 
 ?>
