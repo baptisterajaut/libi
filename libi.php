@@ -1,5 +1,4 @@
 
-
 <?php
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -89,28 +88,28 @@ if (!isset($libi_config_on)) {
 }
 }
 
-
-if (__FILE__ == $_SERVER['SCRIPT_FILENAME']) {
+if (str_replace('\\','/',__FILE__) == $_SERVER['SCRIPT_FILENAME']) {
     // this file is not being included
     if ($libi_welcome) {
-        echo '<div style="text-align: center;"><h1>Libi micro-framework CORE</h1>
+        ?>
+<div style="text-align: center;"><h1>Libi micro-framework CORE</h1>
 		<table border="1" style="text-align:center;margin-left:auto; 
     margin-right:auto;">
 		<tr><th>Module</th><th>Module status</th></tr>
-		<tr><td>Pdo</td><td>' . isenabled($pdo_module) . '</td></tr>
-		<tr><td>User functions</td><td>' . isenabled($user_func) . '</td></tr>
-		<tr><td>Variables securers</td><td>' . isenabled($var_securities) . '</td></tr>
-		<tr><td>Tools for names</td><td>' . isenabled($name_tools) . '</td></tr>
-		<tr><td>Form Builder</td><td>'.isenabled($formBuilder).'</td></tr>
+		<tr><td>Pdo</td><td><?php echo isenabled($pdo_module)?></td></tr>
+		<tr><td>User functions</td><td><?php echo isenabled($user_func)?></td></tr>
+		<tr><td>Variables securers</td><td><?php echo isenabled($var_securities) ?></td></tr>
+		<tr><td>Tools for names</td><td><?php echo isenabled($name_tools) ?></td></tr>
+		<tr><td>Form Builder</td><td><?php echo isenabled($formBuilder)?></td></tr>
 		</table>
 		</div>
 		<div style="text-align:center;position:fixed; width:100%; height:70px; padding:5px; bottom:0px; ">
-		ALL HAIL GNU GPL - Libi project - v0.1.3 - Baptiste Rajaut</div>';
+		ALL HAIL GNU GPL - Libi project - v0.1.4 - Baptiste Rajaut</div>
+<?php
     } else {
         header('Location: http://' . $_SERVER['HTTP_HOST'] . '/');
         exit();
     }
 }
-
 ?>
 <!--  Libi project  - Licensed under GNU GPL -->

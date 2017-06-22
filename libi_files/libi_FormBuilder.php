@@ -9,11 +9,12 @@ class FormBuilder{
 	}
 	public function addInput($name,$echo,$type='',$args=''){
 		$this->form.='<tr><td><label for="' . $name . '">' . $echo . '</label></td>'."<td><input type=\"$type\" name=\"$name\" id=\"$name\" $args /></td></tr>";
+		return $this;
 
 	}
 	
 	public function addSubmitButton($echo='',$submit=''){
-	$this->addinput('submit',$echo,'submit','value="'.$submit.'"');
+	return $this->addinput('submit',$echo,'submit','value="'.$submit.'"');
 }
 	
 	public function addSelectItemFromPdo($name,$echo,$query){
@@ -24,7 +25,14 @@ class FormBuilder{
 		$this->form.='<option value="'.$ligne[0].'">'.$ligne[1].'</option>';
 	}
 	$this->form.='</select></td>';
+	return $this;
 }
+public function addHiddenInput($name,$value='1',$args=''){
+		$this->form.='<input type="hidden" name="'.$name.'" value="'.$value.'" '.$args.' />';
+		return $this;
+}
+
+
 	public function render(){
 		return $this->form.'</table></form>';
 	}
