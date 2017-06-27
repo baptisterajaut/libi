@@ -2,8 +2,8 @@
 class FormBuilder{
 	private $form;
 	
-	public function __construct($page='',$type='POST'){
-	$this->form='<form method="'.$type.'" action="'.$page.'">
+	public function __construct($args="",$page='',$type='POST'){
+	$this->form='<form '.$args.' method="'.$type.'" action="'.$page.'">
 		<table border="0">';
 		
 	}
@@ -11,6 +11,10 @@ class FormBuilder{
 		$this->form.='<tr><td><label for="' . $name . '">' . $echo . '</label></td>'."<td><input type=\"$type\" name=\"$name\" id=\"$name\" $args /></td></tr>";
 		return $this;
 
+	}
+	public function addTextArea($name,$echo,$args='',$value=''){
+		$this->form.='<tr><td><label for="' . $name . '">' . $echo . '</label></td>'."<td><textarea name=\"$name\" id=\"$name\" $args>$value</textarea>";
+		return $this;
 	}
 	
 	public function addSubmitButton($echo='',$submit=''){

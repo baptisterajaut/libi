@@ -1,0 +1,30 @@
+/* Libi css framework */
+.centerMe {
+  text-align: center;
+  margin: auto; }
+
+.floatwrapper {
+  overflow-y: auto; }
+  .floatwrapper.floatToggler:nth-of-type(odd) .toggleMe {
+    float: left; }
+  .floatwrapper.floatToggler:nth-of-type(even) .toggleMe {
+    float: right; }
+    .floatwrapper.floatToggler:nth-of-type(even) .toggleMe p {
+      text-align: right; }
+  .floatwrapper .floatleft {
+    float: left; }
+  .floatwrapper .floatright {
+    float: right; }
+    .floatwrapper .floatright p {
+      text-align: right; }
+
+.halfsize {
+  width: 50%; }
+
+.fullwidth {
+  width: 100%; }
+
+* {
+  box-sizing: border-box; }
+
+/*# sourceMappingURL=libi.css.map */

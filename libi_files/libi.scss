@@ -1,0 +1,52 @@
+/* Libi css framework */
+.centerMe {
+  text-align: center;
+  margin: auto;
+}
+
+
+
+.floatwrapper {
+  overflow-y: auto;
+  &.floatToggler {
+    &:nth-of-type(odd) {
+      .toggleMe {
+        float: left;
+
+      }
+    }
+    &:nth-of-type(even) {
+      .toggleMe {
+        float: right;
+        p{
+          text-align: right;
+        }
+      }
+    }
+  }
+  .floatleft {
+    float: left;
+  }
+  .floatright {
+    float: right;
+    p{
+      text-align: right;
+    }
+
+  }
+}
+
+.halfsize {
+  width: 50%;
+}
+
+.fullwidth {
+  width: 100%;
+}
+*{
+  box-sizing: border-box;
+
+}
+html {
+  font-family: sans-serif;
+}

@@ -6,7 +6,6 @@ ini_set('display_errors', 1);
 //take a session array and removes its empty cases
 function resetter(&$name)
 {
-    echo '<!-- Resetter-->';
     $i = 0;
     $temp = array();
     foreach ($name as $ligne) {
@@ -20,10 +19,11 @@ function resetter(&$name)
 
 }
 
-// THE libi function
-//crate a form inside a table - amm you have to do is enter paramaterd
+// create a form inside a table - all you have to do is enter paramaters
+// Deprecated
 function autoinput($name, $echo,$type='',  $args='')
 {
+	trigger_error('Warning : AutoInput is deprecated and will soon be removed. Use The FormBuilder instead', E_USER_WARNING);
     //type : input type
     //name  : name of the form
     //echo : What's said
@@ -34,16 +34,31 @@ function autoinput($name, $echo,$type='',  $args='')
 
 }
 
+function getLibiCss($insertStyleTag=false){
+	$out='';
+	if($insertStyleTag)
+		$out.='<style>';
+	$out.=file_get_contents('libi_files/libi.css');
+	if($insertStyleTag)
+		$out.='</style>';	
+	return $out;
+	
+}
+
+function insertLibiCss($insertStyleTag=false){
+	echo getLibiCss($insertStyleTag);
+}
 
 function show($var)
 { //verbose power
-    echo '-- ' . $var . ' -- <br/>';
+    echo '<p>-- ' . $var . ' -- </p>';
 }
 
 
 //---------------
 //libi_core start
 //---------------
+{
 $pdo_module = 0;
 $user_func = 0;
 $var_securities = 0;
@@ -92,8 +107,13 @@ if (str_replace('\\','/',__FILE__) == $_SERVER['SCRIPT_FILENAME']) {
     // this file is not being included
     if ($libi_welcome) {
         ?>
-<div style="text-align: center;"><h1>Libi micro-framework CORE</h1>
-		<table border="1" style="text-align:center;margin-left:auto; 
+        <html>
+        <head>
+        <title>Welcome to libi</title>
+        <?php insertLibiCss();?>
+        </head>
+<div class="centerMe"><h1>Libi micro-framework CORE</h1>
+		<table border="1" class="centerMe" style="margin-left:auto; 
     margin-right:auto;">
 		<tr><th>Module</th><th>Module status</th></tr>
 		<tr><td>Pdo</td><td><?php echo isenabled($pdo_module)?></td></tr>
@@ -103,13 +123,14 @@ if (str_replace('\\','/',__FILE__) == $_SERVER['SCRIPT_FILENAME']) {
 		<tr><td>Form Builder</td><td><?php echo isenabled($formBuilder)?></td></tr>
 		</table>
 		</div>
-		<div style="text-align:center;position:fixed; width:100%; height:70px; padding:5px; bottom:0px; ">
-		ALL HAIL GNU GPL - Libi project - v0.1.4 - Baptiste Rajaut</div>
+		<div class="centerMe" style="position:fixed; width:100%; height:70px; padding:5px; bottom:0px; ">
+		ALL HAIL GNU GPL - Libi project - v0.1.5- Baptiste Rajaut</div>
 <?php
     } else {
         header('Location: http://' . $_SERVER['HTTP_HOST'] . '/');
         exit();
     }
+}
 }
 ?>
 <!--  Libi project  - Licensed under GNU GPL -->
