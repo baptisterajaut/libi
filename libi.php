@@ -19,11 +19,16 @@ function resetter(&$name)
 
 }
 
+function error($message, $level=E_USER_NOTICE) { 
+	$d=debug_backtrace();
+$caller = next($d); 
+trigger_error($message.'. Called in <strong>'.$caller['function'].'</strong> called from <strong>'.$caller['file'].'</strong> on line <strong>'.$caller['line'].'</strong>',$level);
+} 
 // create a form inside a table - all you have to do is enter paramaters
 // Deprecated
 function autoinput($name, $echo,$type='',  $args='')
 {
-	trigger_error('Warning : AutoInput is deprecated and will soon be removed. Use The FormBuilder instead', E_USER_WARNING);
+	error('AutoInput is deprecated and will soon be removed. Use The FormBuilder instead', E_USER_DEPRECATED);
     //type : input type
     //name  : name of the form
     //echo : What's said
@@ -45,7 +50,7 @@ function getLibiCss($insertStyleTag=false){
 	
 }
 
-function insertLibiCss($insertStyleTag=false){
+function insertLibiCss($insertStyleTag=true){
 	echo getLibiCss($insertStyleTag);
 }
 
