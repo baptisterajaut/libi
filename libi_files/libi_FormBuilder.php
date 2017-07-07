@@ -18,7 +18,7 @@ class FormBuilder{
 
 	}
 	public function addTextArea($name,$echo,$args='',$value=''){
-		$this->form.= $this->beginEach . '<label for="' . $name . '">' . $echo . '</label></td>' . $this->betweenEach . "<td><textarea name=\"$name\" id=\"$name\" $args>$value</textarea>" . $this->endEach;
+		$this->form.= $this->beginEach . '<label for="' . $name . '">' . $echo . '</label>' . $this->betweenEach . "<textarea name=\"$name\" id=\"$name\" $args>$value</textarea>" . $this->endEach;
 		return $this;
 	}
 	
