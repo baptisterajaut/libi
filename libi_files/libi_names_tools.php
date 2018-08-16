@@ -3,8 +3,13 @@
 // LIBI TOOLS FROM NAMES
 // GNU GPL ABOVE ALL
 // ************************
+
+/**
+ * @param string $var take a name and put it in uppercase
+ * @return string
+ */
 function upname($var)
-{ //take a name and put it in uppercase
+{
     $var = str_replace(
         array(
             'à', 'â', 'ä', 'á', 'ã', 'å',
@@ -38,8 +43,13 @@ function upname($var)
     return $var;
 }
 
+/**
+ * for surnames
+ * @param string $prename name to apply
+ * @return null|string
+ */
 function uppername($prename)
-{ //for surnames
+{
     if (isset($prename) && !empty($prename)) {
         $prename = upname($prename);
         $prename = utf8_decode($prename);
@@ -82,8 +92,14 @@ function uppername($prename)
     return null;
 }
 
+/**
+ * Is it a name or a surname?
+ * @param string $var name to check
+ * @return bool Don't remember what is true lol
+ * @todo update doc
+ */
 function checkstr($var)
-{ //Is it a name or a surname?
+{
     // $var=utf8_decode($var);
     $reg = "#^([a-z]+(( )[a-z]+)*)+([-]([a-z]+(( )[a-z]+)*)+)*$#iu";
     if (preg_match($reg, $var)) {

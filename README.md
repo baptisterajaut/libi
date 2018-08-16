@@ -1,4 +1,4 @@
-# Libi project
+# Libi project 0.2.0
 Open source micro framework/library !
 All hail the gnu gpl.
 
@@ -6,7 +6,7 @@ All hail the gnu gpl.
 
 -Donwload libi.php and libi_files
 
--Configure from libi_config what do you want and dont want and pdo
+-Configure in libi_config
 
 -Include libi.php in your pages
 

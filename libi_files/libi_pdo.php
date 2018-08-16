@@ -3,35 +3,43 @@
 // LIBI PDO TOOLKIT
 // GNU GPL ABOVE ALL
 // ************************
-function pdoco($libi_pdo)
+
+/**
+ * Generate pdo from $__libi_pdo item
+ * @param array $__libi_pdo
+ * @return PDO|null
+ * @throws Exception
+ */
+function pdoco(array $__libi_pdo)
 { //gives back a pdo object
-    if ($libi_pdo == null)
-        throw new Exception('Libi_pdo : No libi_pdo array parameter Given!');
-    $pdo='';
+    if ($__libi_pdo == null || !isset($__libi_pdo))
+        throw new InvalidArgumentException('Libi_pdo : No __libi_pdo array parameter Given!');
+    $pdo=null;
     try {
 
-        $pdo = new PDO($libi_pdo['strConnection'], $libi_pdo['user'], $libi_pdo['password'] /*, $libi_pdo['arrExtraParam']*/); // Instancie la connexion
+        $pdo = new PDO($__libi_pdo['strConnection'], $__libi_pdo['user'], $__libi_pdo['password'] /*, $__libi_pdo['arrExtraParam']*/); // Instancie la connexion
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);//Ligne 4
     } catch (PDOException $e) {
-        $msg = 'Pdo error in ' . $e->getFile() . ' L.' . $e->getLine() . ' : ' . $e->getMessage();
+        $msg = 'Pdo fatal error at libi\'s pdoco : '. $e->getMessage();
         echo $msg;
     }
+
     return $pdo;
 }
 
 
 error_reporting(E_ERROR);
-if (!$libi_config_on) {
+if (!$__libi_config_on) {
 
-    echo '<!-- Warning, libi pdo loaded directly -->';
+    trigger_error('Libi pdo loaded directly',E_USER_WARNING);
 
 
-    if (!(include 'libi_config.php')) {
+    if (!(include realpath(dirname(__FILE__)).'/libi_config.php')) {
         throw new Exception('Pdo module loaded without working config. Aborting.');
     }
 
 
 }
-if($libi_pdo['auto_pdo']){
-    $pdo=pdoco($libi_pdo);
+if($__libi_pdo['auto_pdo']){
+    $pdo=pdoco($__libi_pdo);
 }
