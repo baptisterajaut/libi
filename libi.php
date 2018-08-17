@@ -1,5 +1,8 @@
 <?php
-
+const __LIBI_MODULE_STATUS_UNLOADED = 0;
+const __LIBI_MODULE_STATUS_LOADED = 1;
+const __LIBI_MODULE_STATUS_ERROR = 2;
+$__libi_core=true;
 /**
  * take an array and removes its empty cases.
  * @param array $array array to clean up
@@ -63,48 +66,29 @@ if (!isset($__libi_config_on)) {
 }
 
 if (isset($__libi_config_on)) {
-    $__libi_modules = array(
-        array('name' => 'Pdo',
-            'file' => 'pdo',
-            'status' => 0,
-            'load' => $__libi_pdo['enabled']),
-
-        array('name' => 'Tools for names',
-            'file' => 'names_tools',
-            'status' => 0
-        , 'load' => $__libi_enable_names_tools),
-        array('name' => 'Users functions',
-            'file' => 'user_func',
-            'status' => 0
-        , 'load' => $__libi_enable_user_func),
-        array('name' => 'Variable securers',
-            'file' => 'var_securities',
-            'status' => 0
-        , 'load' => $__libi_enable_var_securities),
-        array('name' => 'Formbuilder',
-            'file' => 'FormBuilder',
-            'status' => 0
-        , 'load' => $__libi_enable_formBuilder),
-        array('name' => 'Compatibility bridge',
-            'file' => 'compatibilty',
-            'status' => 0
-        , 'load' => $__libi_enable_compatibilty),
-    );
+    if(!@(include realpath(dirname(__FILE__)) . '/libi_files/libi_modules.php'))
+        trigger_error('Unable to find module declaration',E_USER_WARNING);
     foreach ($__libi_modules as &$module) {
+        $module['status'] = __LIBI_MODULE_STATUS_UNLOADED;
         if ($module['load']) {
 
             if (@(include realpath(dirname(__FILE__)) . '/libi_files/libi_' . $module['file'] . '.php')) {
-                $module['status'] = 1;
+                $module['status'] = __LIBI_MODULE_STATUS_LOADED;
+                $module['message'] = 'Ok';
             } else {
-                $module['status'] = 2;
+                $module['status'] = __LIBI_MODULE_STATUS_ERROR;
                 $module['message'] = 'Unable to include file';
-                trigger_error('Unable to include '.$module,E_USER_WARNING);
+                trigger_error('Unable to include ' . $module, E_USER_WARNING);
             }
         }
     }
     unset($module);
 }
-
+if ($__libi_debug_mode) {
+    ?><h2>Libi debug - module status</h2>
+    <pre><?php var_dump($__libi_modules) ?></pre><h3>End of debug mode</h3>
+    <?php
+}
 
 if (str_replace('\\', '/', __FILE__) == $_SERVER['SCRIPT_FILENAME']) {
 // this file is not being included
@@ -115,7 +99,7 @@ if (!isset($__libi_config_on) || $__libi_welcome) {
     <title>Welcome to libi</title>
     <?php insertLibiCss(); ?>
 </head>
-<div class="centerMe"><h1>Libi micro-framework CORE</h1>
+<div class="centerMe"><h1>Libi micro-library CORE</h1>
     <?php
     if (isset($__libi_modules) && count($__libi_modules) > 0) {
         ?>
@@ -132,16 +116,16 @@ if (!isset($__libi_config_on) || $__libi_welcome) {
                 <tr>
                     <td><?php echo $module['name'] ?></td>
                     <td><?php switch ($module['status']) {
-                            case 2 :
+                            case __LIBI_MODULE_STATUS_ERROR :
                                 ?>
                                 <div style="color:darkred; font-size:120%;font-weight: bold">
                                     ERROR <?php if ($module['message']) echo ' : ' . $module['message'] ?></div>
                                 <?php break;
-                            case 1 :
+                            case __LIBI_MODULE_STATUS_LOADED :
                                 ?>
                                 <div style="color:green; font-weight: bold">Enabled</div>
                                 <?php break;
-                            case 0 :
+                            case __LIBI_MODULE_STATUS_UNLOADED :
                                 ?>
                                 <div style="color:darkgray;">Disabled</div>
                             <?php
@@ -161,12 +145,12 @@ if (!isset($__libi_config_on) || $__libi_welcome) {
     ?>
 </div>
 <div class="centerMe" style="position:fixed; width:100%; height:70px; padding:5px; bottom:0px; ">
-    ALL HAIL GNU GPL - Libi project - v0.2.0 - Baptiste Rajaut
+    ALL HAIL GNU GPL - Libi project - v0.2.1 - Baptiste Rajaut
 </div>
 <?php
 } else {
-    header('Location: http://' . $_SERVER['HTTP_HOST'] . '/');
-    exit();
+    header('HTTP/1.0 403 Forbidden');
+    die('403 Forbidden - Libi direct access is disabled.');
 }
 }
 unset($__libi_modules);
@@ -180,5 +164,6 @@ unset($__libi_enable_compatibilty);
 
 unset($__libi_config_on);
 unset($__libi_welcome);
+unset($__libi_core);
 }
 ?>

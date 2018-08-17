@@ -23,8 +23,12 @@ $__libi_pdo = array( //params for pdo
 //************
 // FOR LIBI
 //************
-$__libi_welcome=true; //show informations if you call directly libi.php
-
+/**
+ * @var boolean $__libi_welcome Enable if you want to have the welcome page when calling directly libi
+ * @var boolean $__libi_debug_mode Eanble to have modules information
+ */
+$__libi_welcome=true;
+$__libi_debug_mode=false;
 
 $__libi_config_on=true; //Do not change
 
