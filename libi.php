@@ -1,6 +1,4 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
 
 /**
  * take an array and removes its empty cases.
@@ -23,8 +21,6 @@ function resetter(&$array)
 }
 
 
-
-
 /**
  * get libi css framework in string
  * @param bool $insertStyleTag if to insert style tag or not
@@ -35,7 +31,7 @@ function getLibiCss($insertStyleTag = false)
     $out = '';
     if ($insertStyleTag)
         $out .= '<style>';
-    $out .= file_get_contents('libi_files/libi.css');
+    $out .= @file_get_contents(realpath(dirname(__FILE__)) . '/libi_files/libi.css');
     if ($insertStyleTag)
         $out .= '</style>';
     return $out;
@@ -52,7 +48,6 @@ function insertLibiCss($insertStyleTag = true)
 }
 
 
-
 //---------------
 //libi_core start
 //---------------
@@ -62,8 +57,8 @@ function insertLibiCss($insertStyleTag = true)
 // FOR LIBI
 //************
 if (!isset($__libi_config_on)) {
-    if (!(@include realpath(dirname(__FILE__)).'/libi_files/libi_config.php')) {
-        throw new Exception('Unable to get libi config. Running core only.', E_USER_ERROR);
+    if (!(@include realpath(dirname(__FILE__)) . '/libi_files/libi_config.php')) {
+        trigger_error('Unable to get libi config. Running core only.', E_USER_WARNING);
     }
 }
 
@@ -90,7 +85,7 @@ if (isset($__libi_config_on)) {
             'file' => 'FormBuilder',
             'status' => 0
         , 'load' => $__libi_enable_formBuilder),
-        array('name' => 'Comaptibility bridge',
+        array('name' => 'Compatibility bridge',
             'file' => 'compatibilty',
             'status' => 0
         , 'load' => $__libi_enable_compatibilty),
@@ -98,11 +93,12 @@ if (isset($__libi_config_on)) {
     foreach ($__libi_modules as &$module) {
         if ($module['load']) {
 
-            if (@(include realpath(dirname(__FILE__)).'/libi_files/libi_' . $module['file'] . '.php')) {
+            if (@(include realpath(dirname(__FILE__)) . '/libi_files/libi_' . $module['file'] . '.php')) {
                 $module['status'] = 1;
             } else {
                 $module['status'] = 2;
                 $module['message'] = 'Unable to include file';
+                trigger_error('Unable to include '.$module,E_USER_WARNING);
             }
         }
     }
@@ -112,7 +108,7 @@ if (isset($__libi_config_on)) {
 
 if (str_replace('\\', '/', __FILE__) == $_SERVER['SCRIPT_FILENAME']) {
 // this file is not being included
-if ($__libi_welcome) {
+if (!isset($__libi_config_on) || $__libi_welcome) {
 ?>
 <html>
 <head>
@@ -120,43 +116,52 @@ if ($__libi_welcome) {
     <?php insertLibiCss(); ?>
 </head>
 <div class="centerMe"><h1>Libi micro-framework CORE</h1>
-    <table border="1" class="centerMe" style="margin-left:auto;
+    <?php
+    if (isset($__libi_modules) && count($__libi_modules) > 0) {
+        ?>
+        <table border="1" class="centerMe" style="margin-left:auto;
     margin-right:auto;">
-        <tr>
-            <th>Module</th>
-            <th>Module status</th>
-        </tr>
-        <?php
-        foreach ($__libi_modules as $module) {
-            ?>
             <tr>
-                <td><?php echo $module['name'] ?></td>
-                <td><?php switch ($module['status']) {
-                        case 2 :
-                            ?>
-                            <div style="color:darkred; font-size:120%;font-weight: bold">
-                                ERROR <?php if ($module['message']) echo ' : ' . $module['message'] ?></div>
-                            <?php break;
-                        case 1 :
-                            ?>
-                            <div style="color:green; font-weight: bold">Enabled</div>
-                            <?php break;
-                        case 0 :
-                            ?>
-                            <div style="color:darkgray;">Not enabled</div>
-                        <?php
-                    }
-                    ?></td>
-
-
+                <th>Module</th>
+                <th>Module status</th>
             </tr>
             <?php
-        }
-        ?>
-    </table>
+
+            foreach ($__libi_modules as $module) {
+                ?>
+                <tr>
+                    <td><?php echo $module['name'] ?></td>
+                    <td><?php switch ($module['status']) {
+                            case 2 :
+                                ?>
+                                <div style="color:darkred; font-size:120%;font-weight: bold">
+                                    ERROR <?php if ($module['message']) echo ' : ' . $module['message'] ?></div>
+                                <?php break;
+                            case 1 :
+                                ?>
+                                <div style="color:green; font-weight: bold">Enabled</div>
+                                <?php break;
+                            case 0 :
+                                ?>
+                                <div style="color:darkgray;">Disabled</div>
+                            <?php
+                        }
+                        ?></td>
+
+
+                </tr>
+                <?php
+            }
+
+            ?>
+        </table>
+        <?php
+    } else { ?> <h2> No modules loaded </h2><?php
+    }
+    ?>
 </div>
 <div class="centerMe" style="position:fixed; width:100%; height:70px; padding:5px; bottom:0px; ">
-    ALL HAIL GNU GPL - Libi project - v0.1.5- Baptiste Rajaut
+    ALL HAIL GNU GPL - Libi project - v0.2.0 - Baptiste Rajaut
 </div>
 <?php
 } else {
@@ -177,4 +182,3 @@ unset($__libi_config_on);
 unset($__libi_welcome);
 }
 ?>
-<!--  Libi project  - Licensed under GNU GPL -->
