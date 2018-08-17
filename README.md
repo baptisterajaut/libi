@@ -1,4 +1,4 @@
-# Libi project 0.2.0
+# Libi project 0.2
 Open source micro framework/library !
 All hail the gnu gpl.
 
